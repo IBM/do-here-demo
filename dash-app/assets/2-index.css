@@ -1,0 +1,223 @@
+:root {
+  --map-height: calc(100vh - 4.5rem);
+}
+
+body {
+  background-color: #ffffff;
+}
+
+.max-main-content {
+  padding: 0;
+}
+
+.sample-data .max-header {
+  background-color: rebeccapurple;
+  border-bottom-color: rebeccapurple;
+}
+
+.max-header-name-prefix {
+  margin-right: 5px;
+}
+.max-subheader .max-field {
+  display: flex;
+  flex-flow: column;
+  margin-right: 1.5rem;
+}
+.max-subheader .max-field.endpoint-field {
+  display: flex;
+  flex-grow: 1;
+  flex-flow: column;
+}
+.max-subheader .max-field.endpoint-field > .max-field {
+  max-width: 800px;
+  min-width: 300px;
+}
+.max-subheader .max-btn-primary {
+  margin-top: 1rem;
+}
+.max-subheader ~ .max-main-content {
+  min-height: calc(100vh - 145px);
+}
+
+.Select-input {
+  height: 38px;
+}
+.Select-control {
+  border: 1px solid var(--bg-tertiary);
+  border-radius: 0;
+  width: 100%;
+  min-width: 8rem;
+}
+.Select--single > .Select-control .Select-value, .Select-placeholder {
+  line-height: 40px;
+}
+.Select-value, .Select-placeholder {
+  color: var(--gray-60);
+  line-height: 40px;
+}
+
+
+.max-main-content > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.dataRow .max-main-right,
+.mapRow .max-main-left {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+}
+
+.dataRow .max-main-left,
+.mapRow .max-main-right {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+}
+
+.dataRow .max-main-left .max-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media screen and (min-width: 800px) {
+  .dataRow .max-main-right,
+  .mapRow .max-main-left {
+    flex: 3;
+  }
+
+  .dataRow .max-main-left {
+    flex: 1;
+    margin-right: 2rem;
+  }
+
+  .mapRow .max-main-right {
+    flex: 1;
+    padding: 1rem;
+  }
+
+  .mapRow .max-main-right .max-tile {
+    height: 100%;
+  }
+}
+
+.max-tile {
+  border: 1px solid #e7e7e7; /* var(--bg-tertiary); */
+  padding: 0.5rem;
+  margin: 1rem 0;
+}
+
+#hereMap {
+  width: 100%;
+  height: var(--map-height);
+}
+
+.hereMapTile {
+  border: 0 none;
+  padding: 0.5rem;
+  margin: 0;
+}
+
+.progressionChartTile > div {
+  height: 250px;
+}
+
+.confirmedCountTile,
+.deathsCountTile {
+  text-align: center;
+  flex-grow: 1;
+}
+
+.max-tile-value {
+  font-size: 3rem;
+}
+
+.controlsTile {
+  border: 0 none;
+}
+
+.controlsTile .max-tile-title {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.max-btn-primary {
+  justify-content: center;
+  background-color: #007eff;
+  color: #ffffff;
+}
+.max-btn-primary:not([disabled]):hover {
+  background-color: transparent;
+  color: #007eff;
+  border-color: #007eff;
+}
+.max-btn-primary:not([disabled]):active {
+  justify-content: center;
+  background-color: #007eff;
+  color: #ffffff;
+}
+
+.max-btn-secondary {
+  background-color: transparent;
+  color: red;
+  border-color: red;
+}
+.max-btn-secondary:not([disabled]):hover {
+  background-color: red;
+  border-color: red;
+  color: #ffffff;
+}
+.max-btn-secondary:not([disabled]):active {
+  background-color: transparent;
+  color: red;
+  border-color: red;
+}
+
+.controlsTile .dash-table-container {
+  position: relative;
+  overflow: auto;
+  border-left: 1px solid var(--bg-tertiary);
+  border-top: 1px solid var(--bg-tertiary);
+}
+
+.controlsTile .max-field {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.controlsTile .max-field > input:focus,
+.Select.is-focused > .Select-control,
+.Select.is-open > .Select-control {
+  border-color: #007eff;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);
+}
+
+.controlsTile .endpoint-field {
+  border-bottom: 1px solid var(--bg-secondary);
+}
+
+#maxResults {
+  padding: 5px 10px 1.5rem 5px !important;
+}
+
+#addressInput {
+  width: 100%;
+}
+
+#searchButton {
+  float: right;
+}
+
+.rc-slider-track {
+  background-color: #007eff;
+}
+.rc-slider-dot-active,
+.rc-slider-handle,
+.rc-slider-handle:hover,
+.rc-slider-handle:focus {
+  border-color: #007eff;
+}

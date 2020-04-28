@@ -1,0 +1,4 @@
+applications:
+- name: do-here-demo
+  random-route: true
+  memory: 512M

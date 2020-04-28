@@ -68,8 +68,9 @@ To access these services, you'll need an API key. Follow the instructions outlin
 
 - Log into [IBM Watson Studio](https://dataplatform.cloud.ibm.com/)
 - Create a new [Project](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/projects.html)
-- Import the [`do_with_wml.ipynb` notebook](https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/creating-notebooks.html) file into the Project  
-    > **Note** The URL for the notebook to use is `https://raw.githubusercontent.com/IBM/do-here-demo/master/notebook/do_with_wml.ipynb`
+- [Import the notebook](https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/creating-notebooks.html) `do_with_wml.ipynb` into the new Project  
+    > **Note** The URL for the notebook is  
+    > `https://raw.githubusercontent.com/IBM/do-here-demo/master/notebook/do_with_wml.ipynb`
 - Run the imported notebook to build the Decision Optimization model and deploy it into Watson Machine Learning
     > **Note**: You will need to update one of the notebook cells to include your Watson Machine Learning instance credentials. [Follow these steps](https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/ml-get-wml-credentials.html) to find the service credentials.
 - Make note of the model deployment GUID

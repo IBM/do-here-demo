@@ -118,6 +118,13 @@ The web app presents a dashboard containing map view and some form fields. Chang
 
 ## Resources
 
+- [IBM Decision Optimization](https://www.ibm.com/analytics/decision-optimization)
+- [Watson Studio](https://www.ibm.com/cloud/watson-studio)
+- [Watson Machine Learning](https://www.ibm.com/cloud/machine-learning)
+- [DOcplex examples](https://github.com/IBMDecisionOptimization/docplex-examples)
 - [Documentation for IBM Decision Optimization CPLEX Modeling for Python](https://ibmdecisionoptimization.github.io/docplex-doc/)
 - [Decision Optimization and Machine learning on IBM Watson Studio and Watson machine learning](https://github.com/nmdoshi/HandsOnLabDOWS)
-
+- [HERE.com API Key](https://developer.here.com/sign-up)
+- [HERE Maps](https://developer.here.com/products/maps)
+- [HERE Geocoding and Search](https://developer.here.com/products/geocoding-and-search)
+- [Integrate interactive maps and location features into your application](https://developer.here.com/documentation/)

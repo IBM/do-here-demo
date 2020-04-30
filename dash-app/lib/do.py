@@ -22,11 +22,11 @@ def find_possible_sites(places_objs, routes_obj, number_sites=3, deployment_uid=
     routes_df.drop_duplicates(subset=['geopoints'], keep='last', inplace=True)
     
     if deployment_uid == 'local' or (DEPLOYMENT_UID is None and deployment_uid is None):
-      possible_sites = DOLocal().solve(places_df, routes_df, number_sites)
+      possible_sites, status = DOLocal().solve(places_df, routes_df, number_sites)
     else:
-      possible_sites = DOWml(deployment_uid).solve(places_df, routes_df, number_sites)
+      possible_sites, status = DOWml(deployment_uid).solve(places_df, routes_df, number_sites)
 
-    return [Place(p) for p in possible_sites]
+    return [Place(p) for p in possible_sites], status
     
 
 class DOLocal:
@@ -37,7 +37,7 @@ class DOLocal:
   def solve(self, places_df, routes_df, number_sites=3):
     print('Running local model')
     possible_sites = self.build_and_solve(places_df, routes_df, number_sites)
-    return [p._asdict() for p in possible_sites]
+    return [p._asdict() for p in possible_sites], ''
 
 
 class DOWml:
@@ -75,16 +75,22 @@ class DOWml:
     while job_details['entity']['decision_optimization']['status']['state'] not in ['completed', 'failed', 'canceled']:
       print(job_details['entity']['decision_optimization']['status']['state'] + '...')
       sleep(3)
-      job_details=self.wml_client.deployments.get_job_details(job_uid)
+      job_details = self.wml_client.deployments.get_job_details(job_uid)
 
-    print(job_details['entity']['decision_optimization']['status']['state'])
+    status = job_details['entity']['decision_optimization']['status']['state']
 
-    solution_df = pd.DataFrame(
-      job_details['entity']['decision_optimization']['output_data'][0]['values'],
-      columns = job_details['entity']['decision_optimization']['output_data'][0]['fields']
-    )
-    
-    possible_sites = solution_df.to_dict('records')
+    if status in ['failed', 'canceled']:
+      print(job_details['entity']['decision_optimization']['status'])
+      possible_sites = []
+      status = 'Model did not solve. There may not have been a possible solution. Adjust settings and try again.'
+    else:
+      solution_df = pd.DataFrame(
+        job_details['entity']['decision_optimization']['output_data'][0]['values'],
+        columns = job_details['entity']['decision_optimization']['output_data'][0]['fields']
+      )
+      status = ''
+      
+      possible_sites = solution_df.to_dict('records')
 
-    return possible_sites
+    return possible_sites, status
 

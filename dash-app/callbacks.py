@@ -61,18 +61,19 @@ def handle_optimize(geocode, max_distance, max_results, categories, deployment_u
   places = find_places(current_geocode, categories, float(max_distance), int(max_results))
   route_summaries = get_route_summaries(places)
 
-  possible_sites = find_possible_sites(places, route_summaries, number_sites=3, deployment_uid=deployment_uid)
+  possible_sites, status = find_possible_sites(places, route_summaries, number_sites=3, deployment_uid=deployment_uid)
 
   markers = [p.marker() for p in possible_sites]
   add_markers(here_map, markers, fit_bounds=True)
 
-  return here_map, current_geocode
+  return here_map, current_geocode, status
 
 
 @app.callback(
   [
     Output('hereMap', 'srcDoc'),
-    Output('currentGeocode', 'value')
+    Output('currentGeocode', 'value'),
+    Output('solutionStatus', 'children')
   ],
   [
     Input('optimizeButton', 'n_clicks'),
@@ -102,13 +103,14 @@ def map_update(optimize_btn, search_btn, address, max_distance, max_results, cat
     deployment_uid = m.group()[len('deployment='):]
 
   if button_id == 'optimizeButton':
-    here_map, current_geocode = handle_optimize(address, max_distance, max_results, categories, deployment_uid)
+    here_map, current_geocode, status = handle_optimize(address, max_distance, max_results, categories, deployment_uid)
   else:
     here_map, current_geocode = handle_submit(address, max_distance, max_results, categories)
+    status = ''
   
   map_html = here_map.get_root().render()
 
-  return map_html, current_geocode
+  return map_html, current_geocode, status
 
 
 @app.callback(

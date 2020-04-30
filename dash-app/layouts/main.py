@@ -103,7 +103,11 @@ layout_controls = html.Div(
       children=['Search places']
     ),
     html.Div(id='selectedCategories'),
-    dcc.Location(id='url', refresh=False)
+    dcc.Location(id='url', refresh=False),
+    html.Div(
+      id='solutionStatus',
+      className='solutionStatus'
+    )
   ]
 )
 

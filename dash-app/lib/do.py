@@ -21,7 +21,7 @@ def find_possible_sites(places_objs, routes_obj, number_sites=3, deployment_uid=
     routes_df = pd.DataFrame.from_records(routes_obj)
     routes_df.drop_duplicates(subset=['geopoints'], keep='last', inplace=True)
     
-    if deployment_uid == 'local' or (DEPLOYMENT_UID is None and deployment_uid is None):
+    if deployment_uid == 'local' or DEPLOYMENT_UID == 'local' or (DEPLOYMENT_UID is None and deployment_uid is None):
       possible_sites, status = DOLocal().solve(places_df, routes_df, number_sites)
     else:
       possible_sites, status = DOWml(deployment_uid).solve(places_df, routes_df, number_sites)

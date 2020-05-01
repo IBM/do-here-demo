@@ -56,7 +56,7 @@ This document shows how to run the application using on your local machine.
 1. Launch the application
 
     ```shell
-    python index.py
+    python server.py
     ```
 
 1. Access the application at the URL: http://localhost:8050

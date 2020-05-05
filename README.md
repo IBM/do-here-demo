@@ -62,7 +62,8 @@ To access these services, you'll need an API key. Follow the instructions outlin
 
 - If you do not have an IBM Cloud account, [register for a free trial account](https://cloud.ibm.com/registration).
 - Log into [IBM Cloud](https://cloud.ibm.com/login)
-- Create a [create a Watson Machine Learning instance](https://cloud.ibm.com/catalog/services/machine-learning)
+- [Create a Watson Machine Learning service instance](https://cloud.ibm.com/catalog/services/machine-learning)
+- Look up your [Watson Machine Learning service instance credentials](https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/ml-get-wml-credentials.html) (required in the [Deploy the application](#deploy-the-application) step below)
 
 ### Build and deploy the Decision Optimization model
 
@@ -87,27 +88,33 @@ From a command line:
     cd <path_to_cloned_repo>/dash-app
     ```
 
-- Make a copy of the `.env.example` file in the `dash-app` directory in the GitHub repository, and name it `.env`.
+1. Make a copy of the `.env.example` file in the `dash-app` directory in the GitHub repository, and name it `.env`.
 
     ```shell
     cp .env.example .env
     ```
 
-- Edit the newly created `.env` file and update all variables
+1. Edit the newly created `.env` file and update the following variables accordingly:
 
-- Log in to your IBM Cloud account using the IBM Cloud CLI:
+    - `HERE_API_KEY` - REST API key for the HERE Location services
+    - `WML_API_KEY` - API key for the Watson Machine Learning service
+    - `WML_INSTANCE_ID` - Instance ID for the Watson Machine Learning service
+    - `WML_URL` - URL for the Watson Machine Learning service
+    - `WML_DEPLOYMENT_UID` - UID for the deployment Decision Optimization model
+
+1. Log in to your IBM Cloud account using the IBM Cloud CLI:
     ```shell
     ibmcloud login
     ```
-- Target a Cloud Foundry org and space
+1. Target a Cloud Foundry org and space
     ```shell
     ibmcloud target --cf
     ```
-- Push the app to IBM Cloud
+1. Push the app to IBM Cloud
     ```shell
     ibmcloud app push
     ```
-- The server can be accessed at the URL displayed in the console after app has been pushed to IBM Cloud (for example, https://some-random-route.bluemix.net).
+1. Access the server at the URL displayed in the console after the application has been pushed to IBM Cloud (for example, https://some-random-route.bluemix.net).
 
 ### Use the application
 

@@ -5,7 +5,11 @@ This document shows how to run the application using on your local machine.
 
 ## Steps
 
-1. Complete steps 1, 2, and 3 in the [README](https://github.com/IBM/do-here-demo/blob/master/README.md)
+**Complete prerequisites**
+
+1. [Clone the repo](https://github.com/IBM/do-here-demo#clone-the-repo)
+1. [Generate an API Key from the HERE Developer Portal](https://github.com/IBM/do-here-demo#generate-an-api-key-from-the-here-developer-portal)
+1. [Provision a Watson Machine Learning service](https://github.com/IBM/do-here-demo#provision-a-watson-machine-learning-service)
 
 
 **Install Decision Optimization**
@@ -31,16 +35,10 @@ This document shows how to run the application using on your local machine.
     cd <path_to_cloned_repo>/dash-app
     ```
 
-1. Install requirements
+1. Install the requirements for local deployment
 
     ```shell
-    pip install -r requirements.txt
-    ```
-
-1. Install the `docplex` and `cplex` python libraries
-
-    ```shell
-    pip install docplex cplex
+    pip install -r requirements_local.txt
     ```
 
 **Run the demo application**
@@ -51,7 +49,12 @@ This document shows how to run the application using on your local machine.
     cp .env.example .env
     ```
 
-1. Edit the newly created `.env` file and update all variables except `WML_DEPLOYMENT_UID`
+1. Edit the newly created `.env` file and update the following variables accordingly:
+
+    - `HERE_API_KEY` - REST API key for the HERE Location services
+    - `WML_API_KEY` - API key for the Watson Machine Learning service
+    - `WML_INSTANCE_ID` - Instance ID for the Watson Machine Learning service
+    - `WML_URL` - URL for the Watson Machine Learning service
 
 1. Launch the application
 

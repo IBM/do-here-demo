@@ -1,0 +1,7 @@
+dash==1.10.0
+requests
+folium
+watson-machine-learning-client-V4
+python-dotenv
+docplex
+cplex

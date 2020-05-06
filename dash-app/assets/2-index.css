@@ -200,7 +200,8 @@ body {
   border-bottom: 1px solid var(--bg-secondary);
 }
 
-#maxResults {
+#maxResults,
+#maxDistance {
   padding: 5px 10px 1.5rem 5px !important;
 }
 

@@ -50,13 +50,31 @@ layout_controls = html.Div(
       className='max-field',
       children=[
         html.Label(
-          htmlFor='maxDistance',
-          children=['Distance (km)']
+          htmlFor='selectCategories',
+          children=['Categories']
         ),
-        dcc.Input(
+        dcc.Dropdown(
+          id='selectCategories',
+          options=sorted_categories,
+          value=[],
+          multi=True
+        )
+      ]
+    ),
+    html.Div(
+      className='max-field',
+      children=[
+        html.Label(
+          htmlFor='maxDistance',
+          children=['Search Radius (km)']
+        ),
+        dcc.Slider(
           id='maxDistance',
-          type='number',
-          value='20',
+          min=10,
+          max=50,
+          step=5,
+          value=25,
+          marks={ 10: '10', 20: '20', 30: '30', 40: '40', 50: '50' }
         )
       ]
     ),
@@ -69,26 +87,11 @@ layout_controls = html.Div(
         ),
         dcc.Slider(
           id='maxResults',
-          min=0,
-          max=100,
+          min=5,
+          max=75,
           step=5,
           value=20,
-          marks={ 0: '0', 25: '25', 50: '50', 75: '75', 100: '100' }
-        )
-      ]
-    ),
-    html.Div(
-      className='max-field',
-      children=[
-        html.Label(
-          htmlFor='selectCategories',
-          children=['Categories']
-        ),
-        dcc.Dropdown(
-          id='selectCategories',
-          options=sorted_categories,
-          value=[],
-          multi=True
+          marks={ 5: '5', 15: '15', 25: '25', 35: '35', 45: '45', 55: '55', 65: '65', 75: '75' }
         )
       ]
     ),

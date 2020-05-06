@@ -7,21 +7,15 @@ import re
 from lib.here import get_geocode, get_here_map, get_places_nearby, add_markers, get_route_summaries
 from lib.do import find_possible_sites
 
-def get_last_zero_index(data):
-  return data.index(0) if 0 in data else len(data)
+def get_deployment_uid(query_param):
+  deployment_uid = None
 
-def get_progression_chart(data):
-  title = 'Total COVID-19 reported cases by date for {} (Pop: {})'.format(data['recordLocation'], data['totalPopulation'])
-  z = get_last_zero_index(data['confirmed'])
-  return {
-    'data': [
-      {'x': data['dateReport'][:z + 1], 'y': data['confirmed'][:z + 1], 'type': 'lines', 'name': 'confirmed'},
-      {'x': data['dateReport'][:z + 1], 'y': data['deaths'][:z + 1], 'type': 'lines', 'name': 'deaths'}
-    ],
-    'layout': {
-      'title': title
-    }
-  }
+  if query_param and 'deployment' in query_param:
+    m = re.match(r'deployment=[^&]*', query_param[1:], re.I)
+    deployment_uid = m.group()[len('deployment='):]
+
+  return deployment_uid
+
 
 def reset_map(address):
   geocode = get_geocode(address)
@@ -47,26 +41,15 @@ def find_places(geocode, categories, max_distance, max_results):
   return places
 
 
-def handle_submit(geocode, max_distance, max_results, categories):
-  here_map, current_geocode = reset_map(geocode)
-  places = find_places(current_geocode, categories, float(max_distance), int(max_results))
+def show_places(here_map, places):
   markers = [p.marker() for p in places]
   add_markers(here_map, markers, fit_bounds=True)
 
-  return here_map, current_geocode
 
-
-def handle_optimize(geocode, max_distance, max_results, categories, deployment_uid):
-  here_map, current_geocode = reset_map(geocode)
-  places = find_places(current_geocode, categories, float(max_distance), int(max_results))
+def handle_optimize(places, deployment_uid):
   route_summaries = get_route_summaries(places)
-
   possible_sites, status = find_possible_sites(places, route_summaries, number_sites=3, deployment_uid=deployment_uid)
-
-  markers = [p.marker() for p in possible_sites]
-  add_markers(here_map, markers, fit_bounds=True)
-
-  return here_map, current_geocode, status
+  return possible_sites, status
 
 
 @app.callback(
@@ -96,17 +79,16 @@ def map_update(optimize_btn, search_btn, address, max_distance, max_results, cat
   else:
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
-  deployment_uid = None
-
-  if query_param and 'deployment' in query_param:
-    m = re.match(r'deployment=[^&]*', query_param[1:], re.I)
-    deployment_uid = m.group()[len('deployment='):]
+  deployment_uid = get_deployment_uid(query_param)
+  here_map, current_geocode = reset_map(address)
+  places = find_places(current_geocode, categories, float(max_distance), int(max_results))
 
   if button_id == 'optimizeButton':
-    here_map, current_geocode, status = handle_optimize(address, max_distance, max_results, categories, deployment_uid)
+    possible_sites, status = handle_optimize(places, deployment_uid)
+    show_places(here_map, possible_sites)
   else:
-    here_map, current_geocode = handle_submit(address, max_distance, max_results, categories)
     status = ''
+    show_places(here_map, places)
   
   map_html = here_map.get_root().render()
 

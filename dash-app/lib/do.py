@@ -11,6 +11,12 @@ WML_API_KEY = os.environ.get('WML_API_KEY')
 WML_INSTANCE_ID = os.environ.get('WML_INSTANCE_ID')
 WML_URL = os.environ.get('WML_URL')
 
+def get_deployment(deployment_uid):
+  if deployment_uid is not None:
+    guid = deployment_uid
+  else:
+    guid = DEPLOYMENT_UID
+  return guid
 
 def find_possible_sites(places_objs, routes_obj, number_sites=3, deployment_uid=None):
   if use_sample_data:
@@ -20,11 +26,13 @@ def find_possible_sites(places_objs, routes_obj, number_sites=3, deployment_uid=
     places_df = pd.DataFrame.from_records([p.to_dict() for p in places_objs])
     routes_df = pd.DataFrame.from_records(routes_obj)
     routes_df.drop_duplicates(subset=['geopoints'], keep='last', inplace=True)
+
+    guid = get_deployment(deployment_uid)
     
-    if deployment_uid == 'local' or DEPLOYMENT_UID == 'local' or (DEPLOYMENT_UID is None and deployment_uid is None):
+    if guid == 'local' or guid is None:
       possible_sites, status = DOLocal().solve(places_df, routes_df, number_sites)
     else:
-      possible_sites, status = DOWml(deployment_uid).solve(places_df, routes_df, number_sites)
+      possible_sites, status = DOWml(guid).solve(places_df, routes_df, number_sites)
 
     return [Place(p) for p in possible_sites], status
     
@@ -44,7 +52,7 @@ class DOWml:
   def __init__(self, deployment_uid=None):
     from watson_machine_learning_client import WatsonMachineLearningAPIClient
 
-    self.deployment_uid = deployment_uid if deployment_uid else DEPLOYMENT_UID
+    self.deployment_uid = deployment_uid
 
     wml_credentials = {
       'apikey': WML_API_KEY,

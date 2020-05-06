@@ -1,6 +1,7 @@
 from time import sleep
 import pandas as pd
 import os
+import sys
 
 from lib.Place import Place
 from config import use_sample_data
@@ -44,8 +45,15 @@ class DOLocal:
 
   def solve(self, places_df, routes_df, number_sites=3):
     print('Running local model')
-    possible_sites = self.build_and_solve(places_df, routes_df, number_sites)
-    return [p._asdict() for p in possible_sites], ''
+    try:
+      possible_sites = self.build_and_solve(places_df, routes_df, number_sites)
+      status = ''
+    except:
+      status = str(sys.exc_info()[1])
+      print(status)
+      possible_sites = []
+      
+    return [p._asdict() for p in possible_sites], status
 
 
 class DOWml:
@@ -88,7 +96,8 @@ class DOWml:
     status = job_details['entity']['decision_optimization']['status']['state']
 
     if status in ['failed', 'canceled']:
-      print(job_details['entity']['decision_optimization']['status'])
+      status_obj = job_details['entity']['decision_optimization']['status']
+      print(status_obj)
       possible_sites = []
       status = 'Model did not solve. There may not have been a possible solution. Adjust settings and try again.'
     else:

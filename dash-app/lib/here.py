@@ -155,12 +155,12 @@ def get_here_map (location, markers=[]):
   return map
 
 
-def get_places_nearby (location, categories=[], max_distance_km=15, results_limit=100):
+def get_places_nearby (location, categories=[], max_distance_km=50, results_limit=100):
   if use_sample_data:
     places_list = sample_places
   else:
+    places_list = []
     browse_url = get_browse_url(location, categories, limit=results_limit)
-
     response = requests.get(browse_url)
 
     if response.ok:

@@ -1,6 +1,6 @@
 # Finding optimal locations for temporary emergency medical sites
 
-In this code pattern, we will create an application using IBM Decision Optimization, Watson Machine Learning, HERE Technologies, and Plotly Dash. Using places data provided by HERE, a Decision Optimization model deployed in Watson Machine Learning will find the optimal locations to establish temporary medical sites.
+In this code pattern, we will create an application using IBM Decision Optimization, Watson Machine Learning, HERE Technologies, and Plotly Dash. Using data provided by HERE Geocoding and Search API, a Decision Optimization model deployed in Watson Machine Learning will find the optimal locations to establish temporary medical sites.
 
 When the reader has completed this pattern, they will understand how to:
 

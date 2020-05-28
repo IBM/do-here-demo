@@ -7,9 +7,17 @@ from config import demo_title, demo_subtitle, demo_description
 info_panel_content = '''
 # {title} {subtitle}
 
-{description}
+**{description}**
 
-[Demo GitHub repository](https://github.com/IBM/do-here-demo)
+[GitHub repository](https://github.com/IBM/do-here-demo)
+
+The demo uses data from HERE Technologies to query a Decision Optimization model
+deployed in Watson Machine Learning. The model is a basic Decision Optimization
+model with main purpose of demonstrating integrating Decision Optimization with
+HERE Technologies.
+
+This model can and should be improved upon to include better constraints that 
+can provide a more optimal solution.
 
 &nbsp;
 

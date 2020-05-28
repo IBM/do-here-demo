@@ -2,7 +2,7 @@ import dash
 import dash_html_components as html
 import flask
 
-from config import use_sample_data, demo_title, demo_description
+from config import demo_title, demo_description
 
 from layouts.info import info_panel
 from layouts.header import page_header
@@ -16,7 +16,6 @@ app.title = '{} | {}'.format(demo_description, demo_title)
 
 app.layout = html.Div(
   id='emergency-center-dashboard',
-  className='sample-data' if use_sample_data else '',
   children=[
     page_header,
     info_panel,

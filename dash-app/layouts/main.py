@@ -66,15 +66,15 @@ layout_controls = html.Div(
       children=[
         html.Label(
           htmlFor='maxDistance',
-          children=['Search Radius (km)']
+          children=['Search radius (km)']
         ),
         dcc.Slider(
           id='maxDistance',
-          min=10,
+          min=0,
           max=50,
           step=5,
           value=25,
-          marks={ 10: '10', 20: '20', 30: '30', 40: '40', 50: '50' }
+          marks={ 0: '0', 10: '10', 20: '20', 30: '30', 40: '40', 50: '50' }
         )
       ]
     ),
@@ -83,15 +83,15 @@ layout_controls = html.Div(
       children=[
         html.Label(
           htmlFor='maxResults',
-          children=['Max results']
+          children=['Max search results']
         ),
         dcc.Slider(
           id='maxResults',
-          min=5,
-          max=75,
+          min=0,
+          max=100,
           step=5,
-          value=20,
-          marks={ 5: '5', 15: '15', 25: '25', 35: '35', 45: '45', 55: '55', 65: '65', 75: '75' }
+          value=40,
+          marks={ 0: '0', 20: '20', 40: '40', 60: '60', 80: '80', 100: '100' }
         )
       ]
     ),

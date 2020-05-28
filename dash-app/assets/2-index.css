@@ -10,11 +10,6 @@ body {
   padding: 0;
 }
 
-.sample-data .max-header {
-  background-color: rebeccapurple;
-  border-bottom-color: rebeccapurple;
-}
-
 .max-header-name-prefix {
   margin-right: 5px;
 }
@@ -228,4 +223,5 @@ body {
   font-size: 0.85rem;
   font-weight: 600;
   margin-top: 1.5rem;
+  white-space: pre;
 }

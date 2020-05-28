@@ -1,52 +1,84 @@
 from docplex.mp.model import Model
+from statistics import mean
 
 
-def get_distance(routes_df, p1, p2):
-    return routes_df.loc[p1.geocode + '_' + p2.geocode]['distance']
+def get_distance(routes_df, start, destination):
+    s = getattr(start, 'geocode', start)
+    d = getattr(destination, 'geocode', destination)
+    row = routes_df.loc[
+        (routes_df['start'] == s) &
+        (routes_df['destination'] == d)
+    ]
+    return row['distance'].values[0]
+
 
 def build_and_solve(places_df, routes_df, number_sites=3):
     print('Building and solving model')
-
-    postal_codes = places_df['postal_code'].unique()
     
-    places = list(places_df.itertuples(name='Place', index=False))
+    mean_dist = mean(routes_df['distance'].unique())
+    p_only = places_df.loc[places_df['is_medical'] == False]
+    h_only = places_df.loc[places_df['is_medical'] == True]
     
-    routes_df.set_index(['geopoints'], inplace=True)
+    places = list(p_only.itertuples(name='Place', index=False))
 
-    mdl = Model(name='temporary medical sites')
+    postal_codes = p_only['postal_code'].unique()
+    hospital_geocodes = h_only['geocode'].unique()
 
+    mdl = Model(name='temporary emergency sites')
+    
+    ## decision variables
     places_vars = mdl.binary_var_dict(places, name='is_place')
-    link_vars = mdl.binary_var_matrix(places, postal_codes, 'link')
+    postal_link_vars = mdl.binary_var_matrix(postal_codes, places, 'link')
+    hosp_link_vars = mdl.binary_var_matrix(hospital_geocodes, places, 'link')
 
+    ## objective function
+    # minimize hospital distances
+    h_total_distance = mdl.sum(hosp_link_vars[h, p] * abs(mean_dist - get_distance(routes_df, h, p)) for h in hospital_geocodes for p in places)
+    mdl.minimize(h_total_distance)
+
+    ## constraints
     # match places with their correct postal_code
-    for place in places:
-        for postal in postal_codes:
-            if place.postal_code != postal:
-                mdl.add_constraint(link_vars[place, postal] == 0, 'ct_forbid_{0!s}_{1!s}'.format(place, postal))
+    for p in places:
+        for c in postal_codes:
+            if p.postal_code != c:
+                mdl.add_constraint(postal_link_vars[c, p] == 0, 'ct_forbid_{0!s}_{1!s}'.format(c, p))
 
-    # only want one place per postal_code
-    mdl.add_constraints(
-        mdl.sum(link_vars[place, postal] for place in places) == 1
-            for postal in postal_codes
-    )
+    # # each postal_code should have one only place
+    # mdl.add_constraints(
+    #     mdl.sum(postal_link_vars[c, p] for p in places) == 1 for c in postal_codes
+    # )
 
-    # each postal_code must be associated with a place
-    mdl.add_constraints(
-      link_vars[place, postal] <= places_vars[place] for place in places for postal in postal_codes
-    )
+    # # each postal_code must be associated with a place
+    # mdl.add_constraints(
+    #     postal_link_vars[c, p] <= places_vars[p] for p in places for c in postal_codes
+    # )
 
     # solve for 'number_sites' places
-    mdl.add_constraint(mdl.sum(places_vars[place] for place in places) == number_sites)
+    mdl.add_constraint(mdl.sum(places_vars[p] for p in places) == number_sites)
 
-    # minimize distance between places
-    places_link_vars = mdl.binary_var_matrix(places, places, 'link')
-    total_distance = mdl.sum(places_link_vars[c_loc, b] * get_distance(routes_df, c_loc, b) for c_loc in places for b in places)
-    mdl.minimize(total_distance)
-
+    ## model info
     mdl.print_information()
+    stats = mdl.get_statistics()
 
-    mdl.solve()
+    ## model solve
+    mdl.solve(log_output=True)
+    details = mdl.solve_details
+
+    status = '''
+    Model stats
+      number of variables: {}
+      number of constraints: {}
+
+    Model solve
+      time (s): {}
+      status: {}
+    '''.format(
+        stats.number_of_variables,
+        stats.number_of_constraints,
+        details.time,
+        details.status
+    )
 
     possible_sites = [p for p in places if places_vars[p].solution_value == 1]
 
-    return possible_sites
+    return possible_sites, status

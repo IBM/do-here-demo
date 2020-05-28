@@ -6,12 +6,9 @@ def env_to_bool(value):
   else:
     return bool(value)
 
-
 enable_debug = env_to_bool(os.getenv('ENABLE_DEBUG'))
-use_sample_data = env_to_bool(os.getenv('USE_SAMPLE_DATA'))
-
 
 demo_title = 'DO + HERE'
 demo_subtitle = 'Demo'
-demo_description = 'Finding locations for temporary emergency medical sites'
+demo_description = 'Finding locations to establish temporary emergency facilities'
 

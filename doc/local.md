@@ -56,6 +56,8 @@ This document shows how to run the application using on your local machine.
     - `WML_INSTANCE_ID` - Instance ID for the Watson Machine Learning service
     - `WML_URL` - URL for the Watson Machine Learning service
 
+    > **Note**: `WML_DEPLOYMENT_UID` should be left blank or commented out
+
 1. Launch the application
 
     ```shell

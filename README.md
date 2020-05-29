@@ -1,6 +1,8 @@
 # Finding optimal locations to establish temporary emergency facilities
 
-In this code pattern, we will create an application using IBM Decision Optimization, Watson Machine Learning, HERE Technologies, and Plotly Dash. Using data provided by HERE Geocoding and Search API, a Decision Optimization model deployed in Watson Machine Learning will find the optimal locations to establish temporary sites.
+In this code pattern, we will create an application using IBM Decision Optimization, Watson Machine Learning, HERE Technologies, and Plotly Dash. Using data provided by HERE Geocoding and Search API, a Decision Optimization model deployed in Watson Machine Learning will find the optimal locations to establish temporary emergency sites.
+
+The model created is a basic Decision Optimization model with the main purpose of demonstrating the integration of Decision Optimization with HERE Technologies. This model can and should be improved upon by the reader to include better constraints that can provide a more optimal solution.
 
 When the reader has completed this pattern, they will understand how to:
 
@@ -118,9 +120,15 @@ From a command line:
 
 ### Use the application
 
-The web app presents a dashboard containing map view and some form fields. Change the default form values and click **Search places** to view Places on the map based on the form values. Click on the **Run model** button to pass the current Places data to the Decision Optimization model. The map gets updated to show optimal places returned by the model.
+The web app presents a dashboard containing a map view and some form fields. Change the default form values and click **Search places** to view Places on the map based on the form values. Click on the **Run model** button to pass the current Places data to the Decision Optimization model. The map gets updated to show the (top 3) results returned by the model.
 
-![app screenshot](doc/source/images/app-screenshot.png)
+The app will display some statistics from the model run as well as the following markers on the map:
+
+- `green`: location of the **Address**. 
+- `red`: location of nearby hospitals
+- `blue`: location of places returned by HERE search or model results 
+
+![app screenshot](doc/source/images/app-screenshot.jpg)
 
 
 ## Resources

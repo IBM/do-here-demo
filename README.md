@@ -58,7 +58,7 @@ git clone https://github.com/IBM/do-here-demo
 
 The application uses HERE Location Services for maps and searching.
 
-To access these services, you'll need an API key. Follow the instructions outlined in the [HERE Developer Portal](https://developer.here.com/sign-up) to [generate an API key](https://developer.here.com/documentation/authentication/dev_guide/topics/api-key-credentials.html).
+To access these services, you'll need an API key. Follow the instructions outlined in the [HERE Developer Portal](https://developer.here.com/ref/IBM_starterkit_Emergency?create=Freemium-Basic) to [generate an API key](https://developer.here.com/documentation/authentication/dev_guide/topics/api-key-credentials.html).
 
 ### Provision a Watson Machine Learning service
 
@@ -139,7 +139,7 @@ The app will display some statistics from the model run as well as the following
 - [DOcplex examples](https://github.com/IBMDecisionOptimization/docplex-examples)
 - [Documentation for IBM Decision Optimization CPLEX Modeling for Python](https://ibmdecisionoptimization.github.io/docplex-doc/)
 - [Decision Optimization and Machine learning on IBM Watson Studio and Watson machine learning](https://github.com/nmdoshi/HandsOnLabDOWS)
-- [HERE.com API Key](https://developer.here.com/sign-up)
+- [HERE.com API Key](https://developer.here.com/ref/IBM_starterkit_Emergency?create=Freemium-Basic)
 - [HERE Maps](https://developer.here.com/products/maps)
 - [HERE Geocoding and Search](https://developer.here.com/products/geocoding-and-search)
 - [Integrate interactive maps and location features into your application](https://developer.here.com/documentation/)
